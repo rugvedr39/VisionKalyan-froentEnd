@@ -1,0 +1,97 @@
+<!-- user-list.component.html -->
+
+<div class="container mt-5">
+    <h2>User List</h2>
+    <div *ngIf="loading" class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    <table class="table" *ngIf="!loading" >
+        <thead>
+            <tr>
+                <th>#</th> <!-- Serial Number Column -->
+                <th>Username</th>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Activation Date</th>
+                <th>Password</th>
+                <th>Sponsor ID</th>
+                <th>Action</th> <!-- New column for Edit button -->
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; let i = index">
+                <td>{{ i + 1 }}</td> <!-- Serial Number Starts from 1 -->
+                <td>{{ user.username }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.phoneNumber }}</td>
+                <td>{{ transformDateTime(user.createdAt) }}</td>
+                <td>{{ user.password }}</td>
+                <td>{{ user.sponsorId }}</td>
+                <td>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editUser(user.username)">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div *ngIf="loading" class="text-center">
+                    <div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+                  </div>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit User</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" *ngIf="!loading">
+                <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" formControlName="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" formControlName="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="panNumber">PAN Number</label>
+                        <input type="text" class="form-control" id="panNumber" formControlName="panNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" formControlName="email">
+                    </div>
+                </form>
+                <hr>
+                <h4>Account Deatils</h4>
+                <div class="form-group">
+                    <label for="email">Bank Name</label>
+                    <input type="email" class="form-control" [(ngModel)]="bankName">
+                </div>
+                <div class="form-group">
+                    <label for="email">Account Number</label>
+                    <input type="email" class="form-control" [(ngModel)]="accountNumber">
+                </div>
+                <div class="form-group">
+                    <label for="email">IFSC Code</label>
+                    <input type="email" class="form-control" [(ngModel)]="ifscCode">
+                </div>
+                <button class="btn btn-primary form-control mt-2" (click)="bankDeatils()">Save Bank Details</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

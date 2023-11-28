@@ -1,0 +1,12 @@
+.wrapper {
+    display: flex;
+  }
+
+  app-sidebar {
+    flex: 0 0 250px; /* Fixed width for the sidebar */
+  }
+
+  #content {
+    flex: 1; /* Take the remaining width */
+    padding: 20px;
+  }

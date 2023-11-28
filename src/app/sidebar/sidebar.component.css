@@ -1,0 +1,37 @@
+/* styles.css (or your preferred stylesheet) */
+
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    padding-top: 20px;
+    color: white;
+  }
+  
+  .sidebar-header {
+    text-align: center;
+    padding-bottom: 10px;
+  }
+  
+  .components {
+    padding: 0;
+    list-style: none;
+  }
+  
+  .components a {
+    padding: 8px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .components a:hover {
+    background-color: #343a40;
+  }
+  

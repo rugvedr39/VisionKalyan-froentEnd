@@ -1,0 +1,28 @@
+<!-- payout-details.component.html -->
+<div class="container mt-5">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Bank Name</th>
+          <th>Bank IFSC Code</th>
+          <th>Bank Account Number</th>
+          <th>Total Income</th>
+          <th>TDS</th>
+          <th>Net Payable</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of data; let i = index">
+          <td>{{ entry.Name }}</td>
+          <td>{{ entry['Bank Name'] }}</td>
+          <td>{{ entry['Bank IFSC Code'] }}</td>
+          <td>{{ entry['Bank Account Number'] }}</td>
+          <td>{{ entry['Total Income'] }}</td>
+          <td>{{ entry['TDS'] }}</td>
+          <td>{{ entry['Net Payable'] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
