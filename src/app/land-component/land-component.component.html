@@ -1,0 +1,23 @@
+<div class="col-6 offset-3 card-body p-5">
+  <div>Project Name</div>
+  <input type="text" class="form-control" [(ngModel)]="pname">
+  <div class="mt-4">Address</div>
+  <input type="text" class="form-control" [(ngModel)]="addres">
+  <div class="mt-4">MAP URL</div>
+  <input type="text" class="form-control"  [(ngModel)]="map">
+  <div class="mt-4">IMAGE URL</div>
+  <input type="text" class="form-control"  [(ngModel)]="img">
+  <button class="btn btn-warning mt-2" (click)="img_add()">ADD Image</button>
+  <img src="{{item}}" alt="" *ngFor="let item of img_arr" class="img-thumbnail">
+  <!--  -->
+  <button class="btn btn-success form-control mt-4" (click)="submit()">Submit</button>
+</div>
+
+<div class="col-4" *ngFor="let item of data">
+  <div class="card" >
+    <div class="card-header text-center">{{item.project_name}}</div>
+    <div class="card-body">
+      <img src="{{item1}}" alt="" *ngFor="let item1 of item.images" class="img-thumbnail">
+    </div>
+  </div>
+</div>

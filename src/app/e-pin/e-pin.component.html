@@ -3,7 +3,8 @@
     <form [formGroup]="epinForm" (ngSubmit)="submitForm()">
       <div class="mb-3">
         <label for="userId" class="form-label">User ID:</label>
-        <input type="text" class="form-control" id="userId" formControlName="userId" required>
+        <input type="text" class="form-control" id="userId" formControlName="userId" (input)="checksponsername()">
+        <div *ngIf="name!=null" class="fw-bold">Name: <span>{{name}}</span></div>
       </div>
       <div class="mb-3">
         <label for="count" class="form-label">Count:</label>

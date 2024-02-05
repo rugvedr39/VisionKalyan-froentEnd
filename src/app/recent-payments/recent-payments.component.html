@@ -1,9 +1,11 @@
 <!-- payout-details.component.html -->
 <div class="container mt-5">
+  <input type="text" placeholder="Filter by Date" class="form-control mb-5" [(ngModel)]="dateFilter" />
     <table class="table table-bordered">
       <thead>
         <tr>
           <th>Name</th>
+          <th>Date</th>
           <th>Bank Name</th>
           <th>Bank IFSC Code</th>
           <th>Bank Account Number</th>
@@ -13,8 +15,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let entry of data; let i = index">
+        <tr *ngFor="let entry of filteredData; let i = index">
           <td>{{ entry.Name }}</td>
+          <td>{{ transformDateTime(entry.date ) }}</td>
           <td>{{ entry['Bank Name'] }}</td>
           <td>{{ entry['Bank IFSC Code'] }}</td>
           <td>{{ entry['Bank Account Number'] }}</td>

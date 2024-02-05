@@ -1,40 +1,45 @@
+<!-- payout-details.component.html -->
 <div class="p-5">
-    <!-- payout-details.component.html -->
+  <div class="container mt-5">
     <div class="container mt-5">
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-6">
-                    <button class="btn btn-primary mb-3 form-control" (click)="downloadExcel()">Download Excel</button>
-                </div>
-                <div class="col-6">
-                    <button class="btn btn-warning form-control" (click)="Procced()">Make Process For Payout</button></div>
-            </div>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Bank Name</th>
-                  <th>Bank IFSC Code</th>
-                  <th>Bank Account Number</th>
-                  <th>PAN Number</th>
-                  <th>Total Income</th>
-                  <th>TDS</th>
-                  <th>Net Payable</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let user of totalAmountsByUser">
-                  <td>{{ user.Name }}</td>
-                  <td>{{ user['Bank Name'] }}</td>
-                  <td>{{ user['Bank IFSC Code'] }}</td>
-                  <td>{{ user['Bank Account Number'] }}</td>
-                  <td>{{ user['PAN Number'] }}</td>
-                  <td>{{ user['Total Income'] }}</td>
-                  <td>{{user['TDS'] }}</td>
-                  <td>{{user['Net Payable']}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-      </div>
+          <button class="btn btn-warning form-control mb-5" (click)="Procced()">Make Process For Payout</button>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Bank Name</th>
+            <th>Bank IFSC Code</th>
+            <th>Bank Account Number</th>
+            <th>PAN Number</th>
+            <th>Total Income</th>
+            <th>TDS</th>
+            <th>Net Payable</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of totalAmountsByUser">
+            <td>{{ user.Name }}</td>
+            <td>{{ user['Bank Name'] }}</td>
+            <td>{{ user['Bank IFSC Code'] }}</td>
+            <td>{{ user['Bank Account Number'] }}</td>
+            <td>{{ user['PAN Number'] }}</td>
+            <td>{{ user['Total Income'] }}</td>
+            <td>{{ user['TDS'] }}</td>
+            <td>{{ user['Net Payable'] }}</td>
+          </tr>
+          <!-- Totals row -->
+          <tr>
+            <td>Total:</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="text-bg-warning text-center fw-bold">{{ getTotal('Total Income') }}</td>
+            <td class="text-bg-warning text-center fw-bold">{{ getTotal('TDS') }}</td>
+            <td class="text-bg-warning text-center fw-bold">{{ getTotal('Net Payable') }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+  </div>
+</div>

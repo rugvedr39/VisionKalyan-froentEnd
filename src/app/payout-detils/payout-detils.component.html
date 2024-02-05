@@ -1,32 +1,46 @@
 <!-- payout-details.component.html -->
 <div class="container mt-5">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Bank Name</th>
-          <th>Bank IFSC Code</th>
-          <th>Bank Account Number</th>
-          <th>Total Income</th>
-          <th>TDS</th>
-          <th>Net Payable</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let entry of data; let i = index">
-          <td>{{ entry.Name }}</td>
-          <td>{{ entry['Bank Name'] }}</td>
-          <td>{{ entry['Bank IFSC Code'] }}</td>
-          <td>{{ entry['Bank Account Number'] }}</td>
-          <td>{{ entry['Total Income'] }}</td>
-          <td>{{ entry['TDS'] }}</td>
-          <td>{{ entry['Net Payable'] }}</td>
-          <td>
-            <button class="btn btn-success" (click)="markAsSuccess(i)">Success</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <input type="text" placeholder="Filter by Date" class="form-control mb-5" [(ngModel)]="dateFilter" />
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Bank Name</th>
+        <th>Date</th>
+        <th>Bank IFSC Code</th>
+        <th>Bank Account Number</th>
+        <th>Total Income</th>
+        <th>TDS</th>
+        <th>Net Payable</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of filteredData; let i = index">
+        <td>{{ entry.Name }}</td>
+        <td>{{ entry['Bank Name'] }}</td>
+        <td>{{transformDateTime(entry['Date'] )}}</td>
+        <td>{{ entry['Bank IFSC Code'] }}</td>
+        <td>{{ entry['Bank Account Number'] }}</td>
+        <td>{{ entry['Total Income'] }}</td>
+        <td>{{ entry['TDS'] }}</td>
+        <td>{{ entry['Net Payable'] }}</td>
+        <td>
+          <button class="btn btn-success" (click)="markAsSuccess(i)">Success</button>
+        </td>
+      </tr>
+      <!-- Totals row -->
+      <tr>
+        <td>Total:</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="text-bg-warning text-center fw-bold">{{ getTotal('Total Income') }}</td>
+        <td class="text-bg-warning text-center fw-bold">{{ getTotal('TDS') }}</td>
+        <td class="text-bg-warning text-center fw-bold">{{ getTotal('Net Payable') }}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

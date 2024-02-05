@@ -10,6 +10,7 @@ import { EPinComponent } from './e-pin/e-pin.component';
 import { PayoutComponent } from './payout/payout.component';
 import { PayoutDetilsComponent } from './payout-detils/payout-detils.component';
 import { RecentPaymentsComponent } from './recent-payments/recent-payments.component';
+import { LandComponentComponent } from './land-component/land-component.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'payout', component: PayoutComponent },
       { path: 'payoutDetails', component: PayoutDetilsComponent },
       { path: 'recentPayments', component: RecentPaymentsComponent },
+      { path: 'projects', component: LandComponentComponent },
       // Add more routes as needed
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' } // Default route inside 'admin'
     ],

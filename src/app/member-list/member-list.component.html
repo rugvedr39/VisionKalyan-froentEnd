@@ -2,6 +2,7 @@
 
 <div class="container mt-5">
     <h2>User List</h2>
+    <input type="text" placeholder="Search..." class="form-control mb-5" [(ngModel)]="searchTerm" />
     <div *ngIf="loading" class="text-center">
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
@@ -18,10 +19,12 @@
                 <th>Password</th>
                 <th>Sponsor ID</th>
                 <th>Action</th> <!-- New column for Edit button -->
+                <th>Button</th> <!-- New column for Edit button -->
+                <th>Add Emi</th> <!-- New column for Edit button -->
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let user of users; let i = index">
+            <tr *ngFor="let user of filteredUsers; let i = index">
                 <td>{{ i + 1 }}</td> <!-- Serial Number Starts from 1 -->
                 <td>{{ user.username }}</td>
                 <td>{{ user.name }}</td>
@@ -31,6 +34,12 @@
                 <td>{{ user.sponsorId }}</td>
                 <td>
                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="editUser(user.username)">Edit</button>
+                </td>
+                <td>
+                    <button class="btn btn-success" (click)="loginUser(user)">Login</button>
+                </td>
+                <td>
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal1" (click)="emiusername(user.username)">ADD EMI</button>
                 </td>
             </tr>
         </tbody>
@@ -95,3 +104,42 @@
         </div>
     </div>
 </div>
+
+<!--  -->
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">ADD EMI</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>Total EMI Paid:{{userpayedemi}}</div>
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" [(ngModel)]="date" class="form-control">
+            <button type="button" class="btn btn-primary mt-2 " (click)="addemi()">ADD EMI</button>
+            <div class="card mt-2">
+                <div class="card-header">
+                    Topup Amount
+                </div>
+                <div class="card-body">
+                    <label for="date">Topup Amount Present:{{totalAmount}}</label><br>
+                    <label for="date">Topup Amount:</label>
+                <input type="number" placeholder="Amount" name="date" [(ngModel)]="topupAmount" class="form-control">
+                <button type="button" class="btn btn-primary mt-2 " (click)="topup()">ADD Topup</button>
+                </div>
+                <div class="card-footer">
+                    <label for="date">Topup Amount want to Delete:</label>
+                    <input type="number" placeholder="Amount" name="date" [(ngModel)]="topupAmount" class="form-control">
+                    <button type="button" class="btn btn-primary mt-2 " (click)="topupDel()">Delete Topup</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

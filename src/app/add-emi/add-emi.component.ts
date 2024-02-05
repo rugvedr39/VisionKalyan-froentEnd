@@ -18,7 +18,6 @@ username: any;
 
   getCurrentDateTime(): string {
     const now = new Date();
-    // Format the date as 'yyyy-MM-dd HH:mm:ss'
     const formattedDate = `${now.getFullYear()}-${this.padNumber(now.getMonth() + 1)}-${this.padNumber(now.getDate())} ${this.padNumber(now.getHours())}:${this.padNumber(now.getMinutes())}:${this.padNumber(now.getSeconds())}`;
     return formattedDate;
   }
@@ -32,19 +31,15 @@ username: any;
     
     if (this.username!=''&&this.date!='') {
       // Get the form values
-      const { username , date } ={username:this.username,date:this.date}
-      console.log('called service');
-      
+      const { username , date } = {username:this.username,date:this.date}
       // Call the service to add payment to the database
       this.paymentService.addPayment({ username, date })
         .subscribe(
           response => {
             alert('Payment added successfully');
-            // You can redirect or show a success message here
           },
           error => {
             alert(error);
-            // Handle error, show an error message, etc.
           }
         );
     }

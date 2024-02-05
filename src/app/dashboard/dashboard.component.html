@@ -1,0 +1,47 @@
+<button class="btn btn-warning" (click)="sendMessage()">Send WhatsApp Payment Reminder</button>
+<div *ngIf="loading" class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Generate TDS Report</h5>
+      <label for="">Form Date</label>
+      <input type="date" class="form-control mb-2" [(ngModel)]="from_tds_date">
+      <label for="">To Date</label>
+      <input type="date" class="form-control" [(ngModel)]="to_tds_date">
+      <button (click)="generate_tds()" class="btn btn-primary mt-2">Generate</button>
+    </div>
+  </div>
+
+
+
+<div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded" style="width: 30rem;">
+  <div class="card-body">
+      <h5 class="card-title">EMI PAID</h5>
+
+      <!-- Add Date Input -->
+      <div class="mb-3">
+          <label for="userDetailsDate" class="form-label">Select Date</label>
+          <input type="date" class="form-control" id="userDetailsDate" [(ngModel)]="selectedDate" (ngModelChange)="getUsersByDate()">
+      </div>
+
+      <table class="table">
+          <thead>
+              <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Name</th>
+              </tr>
+          </thead>
+          <tbody>
+              <!-- Add your ngFor loop to iterate over users -->
+              <tr *ngFor="let user of users">
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.name }}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>

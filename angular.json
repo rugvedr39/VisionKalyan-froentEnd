@@ -22,7 +22,8 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/_redirects"
             ],
             "styles": [
               "src/styles.css"
@@ -90,6 +91,14 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "deploy": {
+          "builder": "@netlify-builder/deploy:deploy",
+          "options": {
+            "outputPath": "dist/vision-kalyan",
+            "netlifyToken": "nfp_Qa5ns1oCsfuhJXWCzHD3XMZDwQiCWNgnca17",
+            "siteId": "c5709604-5ff4-42ef-bf4c-b64a92781925"
           }
         }
       }

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environment/environment';
 
 @Component({
   selector: 'app-e-pin',
@@ -9,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class EPinComponent {
   epinForm: FormGroup;
+  name: any;
 
   constructor(private fb: FormBuilder,private http: HttpClient) {
     this.epinForm = this.fb.group({
@@ -19,7 +21,7 @@ export class EPinComponent {
 
   submitForm() {
     if (this.epinForm.valid) {
-      this.http.post('https://free.rrinstitute.cloud/generate-epins', this.epinForm.value).subscribe(
+      this.http.post(`${environment.backendUrl}generate-epins`, this.epinForm.value).subscribe(
         (response: any) => {
           if (response.success) {
             alert(response.epins)
@@ -38,4 +40,10 @@ export class EPinComponent {
       alert('Form validation failed');
     }
   }
+
+
+  checksponsername(){
+    this.http.get(`${environment.backendUrl}users/users/${this.epinForm.get('userId')?.value}`).subscribe((data:any) => {
+      this.name = data.user.name
+    })}
 }

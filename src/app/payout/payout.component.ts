@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as XLSX from 'xlsx';
+import { environment } from 'src/environment/environment';
 
 @Component({
   selector: 'app-payout',
@@ -11,12 +12,11 @@ export class PayoutComponent {
   totalAmountsByUser: any;
   unpaidIds:any
   constructor(public http:HttpClient) {
-    this.http.get('https://free.rrinstitute.cloud/payouts/payoutdetails').subscribe((response:any)=>{
+    this.http.get(`${environment.backendUrl}payouts/payoutdetails`).subscribe((response:any)=>{
       this.unpaidIds=response.unpaidIds
-      console.log(response.totalAmountsByUser);
-      
       this.totalAmountsByUser = response.totalAmountsByUser.map((entry:any) => ({
         Name: entry.userDetails?.name,
+        username: entry.userDetails?.username,
         'Bank Name': entry.userDetails?.bankDetails?.bankName,
         'Bank IFSC Code': entry.userDetails?.bankDetails?.ifscCode,
         'Bank Account Number': entry.userDetails?.bankDetails?.accountNumber,
@@ -24,13 +24,15 @@ export class PayoutComponent {
         'Total Income': entry.amount,
         'TDS': entry.amount*0.05,
         'Net Payable': entry.amount-entry.amount*0.05,
-        ids:entry.ids
+        ids:entry.ids,
+        "Date": new Date()
       }));
     });
    }
   //
    Procced() {
-    this.http.post('https://free.rrinstitute.cloud/payouts/procced',{unpaidIds:this.unpaidIds,data:this.totalAmountsByUser}).subscribe((data:any) => {
+    this.downloadExcel()
+    this.http.post(`${environment.backendUrl}payouts/procced`,{unpaidIds:this.unpaidIds,data:this.totalAmountsByUser}).subscribe((data:any) => {
       alert(data.message);
     })
   }
@@ -41,5 +43,9 @@ downloadExcel() {
   const wb: XLSX.WorkBook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'PayoutDetails');
   XLSX.writeFile(wb, 'payout_details.xlsx');
+}
+
+getTotal(property: string): number {
+  return this.totalAmountsByUser.reduce((sum: any, user: { [x: string]: any; }) => sum + (user[property] || 0), 0);
 }
 }

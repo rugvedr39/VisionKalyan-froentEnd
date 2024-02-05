@@ -16,6 +16,9 @@ import { EPinComponent } from './e-pin/e-pin.component';
 import { PayoutComponent } from './payout/payout.component';
 import { PayoutDetilsComponent } from './payout-detils/payout-detils.component';
 import { RecentPaymentsComponent } from './recent-payments/recent-payments.component';
+import { LandComponentComponent } from './land-component/land-component.component';
+import { DataSharingService } from './services/data-sharing.service';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -30,15 +33,17 @@ import { RecentPaymentsComponent } from './recent-payments/recent-payments.compo
     PayoutComponent,
     PayoutDetilsComponent,
     RecentPaymentsComponent,
+    LandComponentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule
   ],
-  providers: [],
+  providers: [DataSharingService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
