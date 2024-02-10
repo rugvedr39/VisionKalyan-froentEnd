@@ -8,49 +8,51 @@ import { environment } from 'src/environment/environment';
   styleUrls: ['./payout-detils.component.css']
 })
 export class PayoutDetilsComponent {
-  markAsSuccess(_t17: number) {
-    const currentDate = new Date();
-    this.data[_t17].date = currentDate;
-    this.data[_t17]._id = this.data.id
-    this.http.post(`${environment.backendUrl}payouts/procced/paid`,this.data[_t17]).subscribe((data:any)=>{
-    alert(data.data);
-    this.data.splice(_t17,1)
-    })
+  unpaidid: any;
+  data: any[] = [];
+  dateFilter: string = '';
+
+  constructor(private http: HttpClient) {
+    this.fetchPayoutData();
   }
-    unpaidid:any
-    data:any
-  
-    constructor(public http:HttpClient) {
-      this.http.get(`${environment.backendUrl}payouts/get/procced`).subscribe((response:any) => {
-      this.unpaidid = response.data[response.data.length-1].unpaidIds
-      this.data=response.data[response.data.length-1].data;
-      this.data.id=response.data[response.data.length-1]._id;
-      })
-    }
 
-    getTotal(property: string): number {
-      return this.data.reduce((sum: any, entry: { [x: string]: any; }) => sum + (entry[property] || 0), 0);
-    }
-  
+  fetchPayoutData(): void {
+    this.http.get(`${environment.backendUrl}payouts/get/procced`).subscribe((response: any) => {
+      if (response && response.data && response.data.length > 0) {
+        response.data.forEach((item: any) => {
+          this.unpaidid = item.unpaidIds;
+          this.data.push(...item.data.map((dataItem: any) => ({ ...dataItem, id: item._id })));
+        });
+      }
+    });
+  }
 
-    transformDateTime(value: string): string {
-      const date = new Date(value);
-      // Get day, month, and year components
-      const day = date.getDate();
-      const month = date.getMonth() + 1; // Months are zero-based
-      const year = date.getFullYear();
-      // Pad single-digit day and month with leading zero
-      const formattedDay = day < 10 ? `0${day}` : `${day}`;
-      const formattedMonth = month < 10 ? `0${month}` : `${month}`;
-      // Create the formatted date string in dd-mm-yyyy format
-      const formattedDate = `${formattedDay}-${formattedMonth}-${year}`;
-      return formattedDate;
-    }
+  markAsSuccess(index: number): void {
+    const currentDate = new Date();
+    this.data[index].date = currentDate;
+    this.http.post(`${environment.backendUrl}payouts/procced/paid`, this.data[index]).subscribe((data: any) => {
+      alert(data.data);
+      this.data.splice(index, 1);
+    });
+  }
 
-    dateFilter: string = '';
-    get filteredData() {
-      return this.data.filter((entry:any) =>
-        entry['Date'].includes(this.dateFilter)
-      );
-    }
+  getTotal(property: string): number {
+    return this.data.reduce((sum: any, entry: any) => sum + (entry[property] || 0), 0);
+  }
+
+  transformDateTime(value: string): string {
+    const date = new Date(value);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const formattedDay = day < 10 ? `0${day}` : `${day}`;
+    const formattedMonth = month < 10 ? `0${month}` : `${month}`;
+    return `${formattedDay}-${formattedMonth}-${year}`;
+  }
+
+  get filteredData() {
+    return this.data.filter((entry: any) =>
+      entry['Date'].includes(this.dateFilter)
+    );
+  }
   }
