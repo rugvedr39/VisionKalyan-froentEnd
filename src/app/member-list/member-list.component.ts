@@ -69,6 +69,7 @@ constructUrlWithParams(url: string, params: any): string {
       }
     );
     this.initializeForm();
+    this.filteredUsers.sort((a, b) => a.serialNumber - b.serialNumber);
   }
 
   editUser(user: any): void {
