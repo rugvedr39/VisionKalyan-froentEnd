@@ -25,7 +25,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let user of filteredUsers; let i = index">
-                <td>{{ i + 1 }}</td> <!-- Serial Number Starts from 1 -->
+                <td>{{user.serialNumber}}</td> <!-- Serial Number Starts from 1 -->
                 <td>{{ user.username }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.phoneNumber }}</td>

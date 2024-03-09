@@ -129,12 +129,13 @@ constructUrlWithParams(url: string, params: any): string {
 
 
   get filteredUsers() {
-    return this.users!.filter(user =>
-      user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      user.phoneNumber.includes(this.searchTerm) ||
-      user.username.toLowerCase().includes(this.searchTerm.toLowerCase())
-    );
-  }
+    return this.users!.filter(user => {
+        const phoneNumber = typeof user.phoneNumber === 'string' ? user.phoneNumber : String(user.phoneNumber);
+        return user.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+            phoneNumber.includes(this.searchTerm) ||
+            user.username.toLowerCase().includes(this.searchTerm.toLowerCase());
+    });
+}
 
 
   bankDeatils() {
