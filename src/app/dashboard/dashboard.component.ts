@@ -24,11 +24,15 @@ unpaydata: any;
   constructor(private http: HttpClient,private dataSharingService: DataSharingService,private datePipe: DatePipe){
     const currentDate = new Date();
     this.selectedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
-    this.getUsersByDate()
-    this.gettopUsers()
-    this.unpaydataget()
-
+    this.initializeData();
   }
+
+  async initializeData() {
+    await this.getUsersByDate();
+    await this.gettopUsers();
+    await this.unpaydataget();
+  }
+
   
   sendMessage(name: any,phone: any,username: any) {
     const message = this.createEMIMessage(name, username, 2000);
@@ -74,32 +78,36 @@ unpaydata: any;
   }
 }
 
-getUsersByDate() {
+async getUsersByDate() {
   const formattedDate = this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd');
   const url = `${environment.backendUrl}emi/getemibydate/${formattedDate}`;
 
-  this.http.get<any[]>(url).subscribe(
-    (data) => {
-      this.users = data;
-    },
-    (error) => {
-      console.error('Error fetching users:', error);
-    }
-  );
+  try {
+    const data = await this.http.get<any[]>(url).toPromise();
+    this.users = data;
+  } catch (error) {
+    console.error('Error fetching users:', error);
+  }
 }
 
-gettopUsers(){
+async gettopUsers() {
   const url = `${environment.backendUrl}topusers`;
-  this.http.get(url).subscribe((response: any) => {
+  try {
+    const response: any = await this.http.get(url).toPromise();
     this.topUsers = response.topUsers;
-  });
+  } catch (error) {
+    console.error('Error fetching top users:', error);
+  }
 }
 
-unpaydataget(){
+async unpaydataget() {
   const url = `${environment.backendUrl}emi`;
-  this.http.get(url).subscribe((response: any) => {
+  try {
+    const response: any = await this.http.get(url).toPromise();
     this.unpaydata = response;
-  });
+  } catch (error) {
+    console.error('Error fetching unpay data:', error);
+  }
 }
 
 createEMIMessage = (recipientName: any, accountID: any, pendingEMIAmount: any) => {
