@@ -105,9 +105,9 @@
                 <tr *ngFor="let user of unpaydata">
                   <td>{{ user.name }}</td>
                   <td>{{ user.username }}</td>
-                  <td>{{ user.phone }}</td>
+                  <td>{{ user.phoneNumber }}</td>
                   <td>
-                    <button class="btn btn-success" (click)="sendMessage(user.name,user.phone,user.username)">Send Message</button>
+                    <button class="btn btn-success" (click)="sendMessage(user.name,user.phoneNumber,user.username)">Send Message</button>
                   </td>
                 </tr>
               </tbody>
