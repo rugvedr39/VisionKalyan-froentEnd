@@ -1,47 +1,120 @@
-<button class="btn btn-warning" (click)="sendMessage()">Send WhatsApp Payment Reminder</button>
+<div class="text-center p-3 fs-2 fw-bolder">
+  Vision Kalyan Infrastructure Pvt Ltd
+</div>
+
 <div *ngIf="loading" class="text-center">
     <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
 
-  <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded" style="width: 18rem;">
-    <div class="card-body">
-      <h5 class="card-title">Generate TDS Report</h5>
-      <label for="">Form Date</label>
-      <input type="date" class="form-control mb-2" [(ngModel)]="from_tds_date">
-      <label for="">To Date</label>
-      <input type="date" class="form-control" [(ngModel)]="to_tds_date">
-      <button (click)="generate_tds()" class="btn btn-primary mt-2">Generate</button>
+
+  <div class="row">
+    <div class="col-3 d-flex align-items-stretch">
+      <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded" style="width: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">Generate TDS Report</h5>
+          <label for="">Form Date</label>
+          <input type="date" class="form-control mb-2" [(ngModel)]="from_tds_date">
+          <label for="">To Date</label>
+          <input type="date" class="form-control" [(ngModel)]="to_tds_date">
+          <button (click)="generate_tds()" class="btn btn-primary mt-2">Generate</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-9 d-flex align-items-stretch">
+      <div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded" style="width: 100%;">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Top Users</h5>
+          <div class="table-container flex-grow-1">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Directs</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of topUsers; let i = index">
+                  <td>{{ i+1 }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.level1Count }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  
+  
 
 
-
-<div class="card mt-5 shadow-lg p-3 mb-5 bg-body rounded" style="width: 30rem;">
-  <div class="card-body">
-      <h5 class="card-title">EMI PAID</h5>
-
-      <!-- Add Date Input -->
-      <div class="mb-3">
-          <label for="userDetailsDate" class="form-label">Select Date</label>
-          <input type="date" class="form-control" id="userDetailsDate" [(ngModel)]="selectedDate" (ngModelChange)="getUsersByDate()">
-      </div>
-
-      <table class="table">
-          <thead>
-              <tr>
+  <div class="row h">
+    <div class="col-4 d-flex align-items-stretch">
+      <div class="card shadow-lg p-3 mb-5 bg-body rounded" style="width: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">EMI PAID</h5>
+      
+          <!-- Add Date Input -->
+          <div class="mb-3">
+            <label for="userDetailsDate" class="form-label">Select Date</label>
+            <input type="date" class="form-control" id="userDetailsDate" [(ngModel)]="selectedDate" (ngModelChange)="getUsersByDate()">
+          </div>
+      
+          <div style="height: 100%; overflow-y: auto;">
+            <table class="table">
+              <thead>
+                <tr>
                   <th scope="col">Username</th>
                   <th scope="col">Name</th>
-              </tr>
-          </thead>
-          <tbody>
-              <!-- Add your ngFor loop to iterate over users -->
-              <tr *ngFor="let user of users">
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Add your ngFor loop to iterate over users -->
+                <tr *ngFor="let user of users">
                   <td>{{ user.username }}</td>
                   <td>{{ user.name }}</td>
-              </tr>
-          </tbody>
-      </table>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-8 d-flex align-items-stretch">
+      <div class="card shadow-lg p-3 mb-5 bg-body rounded" style="width: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">Users Not Paid EMI</h5>
+          <div style="height: 40vh; overflow: auto;">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Username</th>
+                  <th>Phone</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of unpaydata">
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.username }}</td>
+                  <td>{{ user.phone }}</td>
+                  <td>
+                    <button class="btn btn-success" (click)="sendMessage(user.name,user.phone,user.username)">Send Message</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+  

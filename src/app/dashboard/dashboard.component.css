@@ -1,0 +1,12 @@
+.card {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .table-container {
+    overflow-y: auto;
+  }
+  
+  .h{
+    height: 10vh;
+  }

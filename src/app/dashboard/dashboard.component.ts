@@ -18,18 +18,23 @@ export class DashboardComponent {
   filteredPayments:any
   selectedDate: any;
   users: any;
+topUsers: any;
+unpaydata: any;
 
   constructor(private http: HttpClient,private dataSharingService: DataSharingService,private datePipe: DatePipe){
     const currentDate = new Date();
     this.selectedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
     this.getUsersByDate()
+    this.gettopUsers()
+    this.unpaydataget()
 
   }
   
-  sendMessage() {
-    this.loading=true
-    this.http.get(`${environment.backendUrl}emi`).subscribe(data =>{
-      this.loading=false;
+  sendMessage(name: any,phone: any,username: any) {
+    const message = this.createEMIMessage(name, username, 2000);
+    const formattedPhone = '91' + phone;
+    this.http.post(`${environment.backendUrl}send-Whatsapp`,{ number: formattedPhone, message }).subscribe((data:any) =>{
+      alert(data.data)
     })
  }
  async generate_tds() {
@@ -83,4 +88,37 @@ getUsersByDate() {
   );
 }
 
+gettopUsers(){
+  const url = `${environment.backendUrl}topusers`;
+  this.http.get(url).subscribe((response: any) => {
+    this.topUsers = response.topUsers;
+  });
+}
+
+unpaydataget(){
+  const url = `${environment.backendUrl}emi`;
+  this.http.get(url).subscribe((response: any) => {
+    this.unpaydata = response;
+  });
+}
+
+createEMIMessage = (recipientName: any, accountID: any, pendingEMIAmount: any) => {
+  return `
+  Hi ${recipientName},
+
+  I wanted to bring to your attention that we have noticed that the EMI for your account with ID ${accountID} is pending for this month. We kindly request you to make the payment at your earliest convenience to avoid any inconvenience.
+
+  Please find the details below:
+  - Account ID: ${accountID}
+  - Pending EMI Amount: ${pendingEMIAmount}
+
+  You can make the payment through Our Website to the following account:
+
+  If you have already made the payment, please disregard this message.
+
+  Thank you for your prompt attention to this matter. Feel free to reach out if you have any questions or concerns.
+
+  Best regards,
+  Vision Kalyan`;
+};
 }
