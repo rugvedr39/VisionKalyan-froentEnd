@@ -47,4 +47,7 @@ export class UserServiceService {
     const url = `${this.apiUrl}/update-user/${userId}`;
     return this.http.put(url, userData);
 }
+getUpcomingBirthdays(): Observable<any> {
+  return this.http.get(`${this.apiUrl}/upcoming-birthdays`);
+}
 }

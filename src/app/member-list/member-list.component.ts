@@ -96,13 +96,13 @@ constructUrlWithParams(url: string, params: any): string {
       panNumber: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       bankDetails: []=[],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.email]],
+      dob: ['']
     });
   }
   
 
   onSubmit() {
-    console.log(this.userForm);
     if (this.userForm.valid) {
       const formData = this.userForm.value;
       const url = `${environment.backendUrl}users/update/${this.updateUser._id}`

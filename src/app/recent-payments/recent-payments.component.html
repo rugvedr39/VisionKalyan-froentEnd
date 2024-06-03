@@ -1,31 +1,48 @@
-<!-- payout-details.component.html -->
 <div class="container mt-5">
-  <input type="text" placeholder="Filter by Date" class="form-control mb-5" [(ngModel)]="dateFilter" />
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Date</th>
-          <th>Bank Name</th>
-          <th>Bank IFSC Code</th>
-          <th>Bank Account Number</th>
-          <th>Total Income</th>
-          <th>TDS</th>
-          <th>Net Payable</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let entry of filteredData; let i = index">
-          <td>{{ entry.Name }}</td>
-          <td>{{ transformDateTime(entry.date ) }}</td>
-          <td>{{ entry['Bank Name'] }}</td>
-          <td>{{ entry['Bank IFSC Code'] }}</td>
-          <td>{{ entry['Bank Account Number'] }}</td>
-          <td>{{ entry['Total Income'] }}</td>
-          <td>{{ entry['TDS'] }}</td>
-          <td>{{ entry['Net Payable'] }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <input type="text" placeholder="Search" class="form-control mb-5" [(ngModel)]="searchTerm" (input)="searchData()" />
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Bank Name</th>
+        <th>Bank IFSC Code</th>
+        <th>Bank Account Number</th>
+        <th>Total Income</th>
+        <th>TDS</th>
+        <th>Net Payable</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of data; let i = index">
+        <td>{{ entry.Name }}</td>
+        <td>{{ transformDateTime(entry.date) }}</td>
+        <td>{{ entry['Bank Name'] }}</td>
+        <td>{{ entry['Bank IFSC Code'] }}</td>
+        <td>{{ entry['Bank Account Number'] }}</td>
+        <td>{{ entry['Total Income'] }}</td>
+        <td>{{ entry.TDS }}</td>
+        <td>{{ entry['Net Payable'] }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination Controls -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item" *ngFor="let page of displayedPages" [class.active]="currentPage === page">
+        <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>

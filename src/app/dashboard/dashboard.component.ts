@@ -4,6 +4,7 @@ import { environment } from 'src/environment/environment';
 import { DataSharingService } from '../services/data-sharing.service';
 import * as XLSX from 'xlsx';
 import { DatePipe } from '@angular/common';
+import { UserServiceService } from '../services/user-service.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,8 +21,9 @@ export class DashboardComponent {
   users: any;
 topUsers: any;
 unpaydata: any;
+  upcomingBirthdays: any;
 
-  constructor(private http: HttpClient,private dataSharingService: DataSharingService,private datePipe: DatePipe){
+  constructor(private http: HttpClient,private dataSharingService: DataSharingService,private datePipe: DatePipe,  private userService: UserServiceService,){
     const currentDate = new Date();
     this.selectedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
     this.initializeData();
@@ -31,6 +33,7 @@ unpaydata: any;
     await this.getUsersByDate();
     await this.gettopUsers();
     await this.unpaydataget();
+    await this.getUpcomingBirthdays();
   }
 
   
@@ -129,4 +132,17 @@ createEMIMessage = (recipientName: any, accountID: any, pendingEMIAmount: any) =
   Best regards,
   Vision Kalyan`;
 };
+
+getUpcomingBirthdays(): void {
+  this.userService.getUpcomingBirthdays().subscribe(
+    (response: any) => {
+      this.upcomingBirthdays = response.users;
+      console.log('Upcoming birthdays:', this.upcomingBirthdays);
+      
+    },
+    (error) => {
+      console.error('Error fetching upcoming birthdays:', error);
+    }
+  );
+}
 }
